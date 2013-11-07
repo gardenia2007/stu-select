@@ -1,134 +1,216 @@
-$def with (session, data)
+$def with (session, route, data)
   
-$:render.common.header(session)
+$:render.common.header(session, route)
 
-      <div class="container">
-        <div class="page-header" style="">
-          <h2>系统管理</h2>
-        </div>
-        <div class="row">
-          <ul class="nav nav-tabs nav-tabs-google" id="myTab">
-            <li class="active"><a href="#upload" data-toggle="tab">上传数据</a></li>
-            <li><a href="#add-teacher" data-toggle="tab">添加jiaos</a></li>
-            <li><a href="#add-student" data-toggle="tab">添加xxs</a></li>
-            <li><a href="#del-teacher" data-toggle="tab">删除用户</a></li>
-            <li><a href="#info" data-toggle="tab">学生统计</a></li>
-            <!-- <li><a href="#settings" data-toggle="tab">Settings</a></li> -->
-          </ul>
+<div class="container">
+  <div class="row">
+    
+    <h2>系统管理</h2>
+    <hr>
 
-          <div class="tab-content">
-            <!-- 上传数据 -->
-            <div class="tab-pane active" id="upload">
-              <form class="form-horizontal" role="form" style="width:400px;margin-top:40px" method="post" action="/admin/upload" enctype="multipart/form-data">
-                <div class="alert alert-info">
-                  注意：上传新数据会清除系统原有的学生数据！
-                </div>
-                <div class="form-group">
-                  <label class="col-lg-5 control-label">年级</label>
-                  <div class="col-lg-7">
-                    <select class="form-control" name="grade">
-                    $for g in data['grades']:
-                      <option value="$g.g_id">$g.g_name</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword" class="col-lg-5 control-label">数据文件</label>
-                  <div class="col-lg-7">
-                    <input class="form-control" type="file" name="file">数据文件格式为CSV，第一列姓名，第二列班号，第三列人人帐号id
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword" class="col-lg-5 control-label"></label>
-                  <div class="col-lg-7">
-                    <button type="submit" class="btn btn-default">提交</button>
-                  </div>
-                </div>
-              </form>
+    <ul class="nav nav-tabs nav-tabs-google" id="myTab">
+      <li class="active"><a href="#upload" data-toggle="tab">上传数据</a></li>
+      <li><a href="#add-teacher" data-toggle="tab">添加导师</a></li>
+      <li><a href="#add-student" data-toggle="tab">添加学生</a></li>
+      <li><a href="#manage-teacher" data-toggle="tab">管理导师</a></li>
+      <li><a href="#info-student" data-toggle="tab">学生统计</a></li>
+      <li><a href="#info-teacher" data-toggle="tab">导师统计</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- 上传数据 -->
+      <div class="tab-pane active" id="upload">
+        <form class="form-horizontal" role="form" style="width:400px;margin-top:40px" method="post" action="/admin/upload" enctype="multipart/form-data">
+          <div class="alert alert-info">
+            注意：上传新数据会清除系统原有的学生数据！
+          </div>
+          <div class="form-group">
+            <label for="inputPassword" class="col-lg-5 control-label">数据文件</label>
+            <div class="col-lg-7">
+              <input class="form-control" type="file" name="file">
+              <span class="help-block">数据文件格式为CSV，第一列姓名，第二列班号，第三列人人帐号id</span>
             </div>
-
-            <!-- 添加用户 -->
-            <div class="tab-pane" id="add-student">
-              <form class="form-horizontal" role="form" style="width:400px;margin-top:40px" method="post" action="/admin/adduser" enctype="multipart/form-data">
-                <div class="form-group">
-                  <label class="col-lg-5 control-label">姓名</label>
-                  <div class="col-lg-7">
-                    <input class="form-control" type="text" name="name">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-lg-5 control-label">登录密码</label>
-                  <div class="col-lg-7">
-                    <input class="form-control" class="input" type="text" name="password">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-lg-5 control-label">管理年级</label>
-                  <div class="col-lg-7">
-                    <select class="form-control" name="grade">
-                    $for i in range(1, 5):
-                      <option value="$i">Grade $i</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword" class="col-lg-5 control-label"></label>
-                  <div class="col-lg-7">
-                    <button type="submit" class="btn btn-default">提交</button>
-                  </div>
-                </div>
-              </form>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword" class="col-lg-5 control-label"></label>
+            <div class="col-lg-7">
+              <button type="submit" class="btn btn-default">提交</button>
             </div>
+          </div>
+        </form>
+      </div>
 
-            <!-- 删除用户 -->
-            <div class="tab-pane" id="del-teacher">
-              <table class="table table-hover table-striped" style="margin-top:20px">
-                <tr>
-                  <th>#</th>
-                  <th>姓名</th>
-                  <th>年级</th>
-                  <th>角色</th>
-                  <th>操作</th>
-                </tr>
-              $for u in data['users']:
-                <tr>
-                  <td>$loop.index</td>
-                  <td>$u.u_name</td>
-                  <td>$u.g_name</td>
-                  <td>$u.u_role</td>
-                  <td><a href="/admin/deluser/$u.u_id" class="btn btn-danger" onclick="return confirm('确认删除 $u.u_name 的帐号吗？\n该操作无法取消。');">删除</a></td>
-                </tr>
-              </table>
+      <!-- 添加导师用户 -->
+      <div class="tab-pane" id="add-teacher">
+        <form class="form-horizontal" role="form" style="width:400px;margin-top:40px" method="post" action="/admin/add/teacher" enctype="multipart/form-data">
+          <div class="form-group">
+            <label class="col-lg-5 control-label">姓名</label>
+            <div class="col-lg-7">
+              <input class="form-control" type="text" name="name">
             </div>
-
-            <!-- 学生统计 -->
-            <div class="tab-pane" id="info">
-              <table class="table table-hover table-striped" style="margin-top:20px">
-                <tr>
-                  <th>年级</th>
-                  <th>人数</th>
-                  <th>人人状态数</th>
-                </tr>
-                </tr>
-              $for u in data['info']:
-                <tr>
-                  <td>$u.g_name</td>
-                  <td>$u.count</td>
-                  <td>-</td>
-                </tr>
-                </tr>
-              </table>
+          </div>
+          
+          <div class="form-group">
+            <label class="col-lg-5 control-label">登录密码</label>
+            <div class="col-lg-7">
+              <input class="form-control" class="input" type="text" name="password">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="col-lg-5 control-label">联系电话</label>
+            <div class="col-lg-7">
+              <input class="form-control" class="input" type="text" name="phone">
             </div>
           </div>
 
-        </div>
+          <div class="form-group">
+            <label class="col-lg-5 control-label">电子邮箱</label>
+            <div class="col-lg-7">
+              <input class="form-control" class="input" type="text" name="email">
+            </div>
+          </div>
 
+          <div class="form-group">
+            <label class="col-lg-5 control-label">办公地点</label>
+            <div class="col-lg-7">
+              <input class="form-control" class="input" type="text" name="addr">
+            </div>
+          </div> 
 
-        <hr>
+          <div class="form-group">
+            <label class="col-lg-5 control-label">介绍信息</label>
+            <div class="col-lg-7">
+              <textarea class="form-control input" type="text" name="intro"></textarea>
+            </div>
+          </div>
 
-        <script type="text/javascript">
-   
+          <div class="form-group">
+            <label for="inputPassword" class="col-lg-5 control-label"></label>
+            <div class="col-lg-7">
+              <button type="submit" class="btn btn-default">提交</button>
+            </div>
+          </div>
+        </form>
+      </div>
 
-        </script>
+      <!-- 添加学生用户 -->
+      <div class="tab-pane" id="add-student">
+        <form class="form-horizontal" role="form" style="width:400px;margin-top:40px" method="post" action="/admin/add/student" enctype="multipart/form-data">
+
+          <div class="form-group">
+            <label class="col-lg-5 control-label">姓名</label>
+            <div class="col-lg-7">
+              <input class="form-control" type="text" name="name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-lg-5 control-label">登录密码</label>
+            <div class="col-lg-7">
+              <input class="form-control" class="input" type="text" name="password">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="col-lg-5 control-label">联系电话</label>
+            <div class="col-lg-7">
+              <input class="form-control" class="input" type="text" name="phone">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-lg-5 control-label">电子邮箱</label>
+            <div class="col-lg-7">
+              <input class="form-control" class="input" type="text" name="email">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-lg-5 control-label">介绍信息</label>
+            <div class="col-lg-7">
+              <textarea class="form-control input" type="text" name="intro"></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputPassword" class="col-lg-5 control-label"></label>
+            <div class="col-lg-7">
+              <button type="submit" class="btn btn-default">提交</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- 删除导师用户 -->
+      <div class="tab-pane" id="manage-teacher">
+        <table class="table table-hover table-striped" style="margin-top:20px">
+          <tr>
+            <th>#</th>
+            <th>姓名</th>
+            <th>年级</th>
+            <th>角色</th>
+            <th>操作</th>
+          </tr>
+        $for u in data['users']:
+          <tr>
+            <td>$loop.index</td>
+            <td>$u.u_name</td>
+            <td>$u.g_name</td>
+            <td>$u.u_role</td>
+            <td>
+              <a href="/teacher/info" class="btn btn-primary" target="_blank">编辑</a>
+              <a href="/admin/deluser/$u.u_id" class="btn btn-danger" onclick="return confirm('确认删除 $u.u_name 的帐号吗？\n该操作无法取消。');">删除</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 学生统计 -->
+      <div class="tab-pane" id="info-student">
+        <table class="table table-hover table-striped" style="margin-top:20px">
+          <tr>
+            <th>#</th>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>班号</th>
+            <th>导师</th>
+          </tr>
+        $for i in range(10):
+          <tr>
+            <td>$loop.index</td>
+            <td>1100300220</td>
+            <td>李洪祥</td>
+            <td>1103105</td>
+            <td>暂无</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 教师统计 -->
+      <div class="tab-pane" id="info-teacher">
+        <table class="table table-hover table-striped" style="margin-top:20px">
+          <tr>
+            <th>#</th>
+            <th>姓名</th>
+            <th>学生人数</th>
+          $for i in range(1,6):
+            <th>学生$i</th>
+          </tr>
+        $for i in range(11):
+          <tr>
+            <td>$loop.index</td>
+            <td>张三</td>
+            <td>5</td>
+          $for i in range(1,6):
+            <td>$i</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
   
 $:render.common.foot()

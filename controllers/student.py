@@ -10,23 +10,23 @@ class Index(User):
 	def __init__(self):
 		User.__init__(self)
 	def GET(self):
-		raise web.seeother('/student/info')
+		raise web.seeother('/student/teacher/my')
 	def POST(self):
 		pass
 
-class Teacher_my(User):
+class TeacherMy(User):
 	def __init__(self):
 		User.__init__(self)
 	def GET(self):
-		return render.student.teacher_my(web.ctx.session)
+		return render.student.teacher_my(web.ctx.session, 'teacher_my')
 
-class Teacher_all(User):
+class TeacherAll(User):
 	def __init__(self):
 		User.__init__(self)
 	def GET(self):
-		return render.student.teacher_all(web.ctx.session)
+		return render.student.teacher_all(web.ctx.session, 'teacher_all')
 
-class Teacher_info(User):
+class TeacherInfo(User):
 	def __init__(self):
 		User.__init__(self)
 	def GET(self):
@@ -37,5 +37,5 @@ class Info(User):
 	def __init__(self):
 		User.__init__(self)
 	def GET(self):
-		return render.student.info(web.ctx.session)
+		return render.student.info(web.ctx.session, 'student_info')
 		

@@ -1,5 +1,5 @@
-$def with (session)
-$:render.common.header(session)
+$def with (session, route)
+$:render.common.header(session, route)
 
 
 <style type="text/css">
@@ -38,30 +38,23 @@ $:render.common.header(session)
     </div>
 
     <div class="form-group">
-      <label for="inputEmail9" class="col-sm-2 control-label">ban号</label>
+      <label for="inputEmail9" class="col-sm-2 control-label">班号</label>
       <div class="col-sm-10">
-        <input type="text" name="class" class="form-control" id="inputEmail9" placeholder="banhao">
+        <input type="text" name="class" class="form-control" id="inputEmail9" placeholder="班号">
       </div>
     </div>
 
     <div class="form-group">
-      <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+      <label for="inputEmail3" class="col-sm-2 control-label">电子邮箱</label>
       <div class="col-sm-10">
         <input type="email" name="email" class="form-control" id="inputEmail3" placeholder="电子邮箱">
       </div>
     </div>
     
     <div class="form-group">
-      <label for="inputEmail4" class="col-sm-2 control-label">电话</label>
+      <label for="inputEmail4" class="col-sm-2 control-label">联系电话</label>
       <div class="col-sm-10">
         <input type="tel" name="phone" class="form-control" id="inputEmail4" placeholder="联系电话">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="inputEmail5" class="col-sm-2 control-label">生源地</label>
-      <div class="col-sm-10">
-        <input type='text' name="addr" class="form-control" id="inputEmail5" placeholder="生源地">
       </div>
     </div>
 
@@ -76,8 +69,8 @@ $:render.common.header(session)
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
+        <button type="button" class="btn btn-default">返回</button>
         <button type="submit" class="btn btn-primary">提交修改</button>
-        <button type="button" class="btn btn-default">Cancel</button>
       </div>
       </div>
     </div>

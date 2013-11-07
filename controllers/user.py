@@ -14,9 +14,9 @@ class Index(User):
 	def POST(self):
 		pass
 
-class Update_pw(User):
+class UpdatePw(User):
 	def __init__(self):
 		User.__init__(self)
 	def GET(self):
-		return render.user.update_pw(web.ctx.session)
+		return render.user.update_pw(web.ctx.session, 'update_pw')
 		

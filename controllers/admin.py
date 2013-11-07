@@ -20,27 +20,9 @@ class Index(Admin):
 		users = list(db.query('select * from user, grade where u_grade = g_id'))
 		info = list(db.query('select g_name, count(*) as count from stu, grade where s_grade = g_id group by s_grade'))
 		data = {'grades':grades, 'users':users, 'info':info}
-		return render.admin.admin(web.ctx.session, data)
+		return render.admin.admin(web.ctx.session, 'admin', data)
 	def POST(self):
 		pass
-
-
-class Change(Admin):
-	def __init__(self):
-		Admin.__init__(self)
-	def GET(self, g_id, g_name):
-		web.ctx.session.grade = g_name
-
-		if g_id == '0':
-			g_id_str = '('
-			for g in (db.select('grade', what='g_id')): g_id_str += (str(g.g_id)+',')
-			web.ctx.session.grade_id = g_id_str + '0)'
-		else:
-			web.ctx.session.grade_id = '('+str(g_id)+')'
-		web.seeother('/admin')
-	def POST(self):
-		pass
-
 
 class Upload(Admin):
 	def __init__(self):
@@ -62,8 +44,7 @@ class Upload(Admin):
 					'c':int(s_class), 'r':int(s_renren.decode('utf-8'))}))
 		raise web.seeother('/admin')
 
-
-class AddUser(Admin):
+class AddStudent(Admin):
 	def __init__(self):
 		Admin.__init__(self)
 	def GET(self):
@@ -73,11 +54,38 @@ class AddUser(Admin):
 		db.insert('user', u_name=i.name, u_pass=i.password, u_grade=i.grade, u_role=i.role, u_keyword='')
 		web.seeother('/admin')
 
-class DelUser(Admin):
+class AddTeacher(Admin):
+	def __init__(self):
+		Admin.__init__(self)
+	def GET(self):
+		pass
+	def POST(self):
+		i = web.input()
+		db.insert('user', u_name=i.name, u_pass=i.password, u_grade=i.grade, u_role=i.role, u_keyword='')
+		web.seeother('/admin')
+
+class DelTeacher(Admin):
 	def __init__(self):
 		Admin.__init__(self)
 	def GET(self, u_id):
 		db.delete('user', where="u_id=$u_id", vars={'u_id':u_id})
+		web.seeother('/admin')
+	def POST(self):
+		pass
+
+class StatusTeacher(Admin):
+	def __init__(self):
+		Admin.__init__(self)
+	def GET(self, u_id):
+		web.seeother('/admin')
+	def POST(self):
+		pass
+
+
+class StatusStudent(Admin):
+	def __init__(self):
+		Admin.__init__(self)
+	def GET(self, u_id):
 		web.seeother('/admin')
 	def POST(self):
 		pass

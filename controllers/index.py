@@ -13,7 +13,7 @@ class Index:
     	if web.ctx.session.is_login == False:
     		web.seeother('/login')
     	else:
-    		web.seeother('/status')
+    		web.seeother('/student')
     def POST(self):
         pass
 
