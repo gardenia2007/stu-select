@@ -1,0 +1,57 @@
+$def with (session)
+$:render.common.header(session)
+
+
+<style type="text/css">
+  .item-hover{cursor: pointer;background-color: #ffc;}
+</style>
+
+<script type="text/javascript">
+  $$(function(){
+    $$('.item').click(function(event) {
+      /* Act on the event */
+      $$('#myModal').load('/student/teacher/info',
+        function(){
+        /* Stuff to do after the page is loaded */
+          $$('#myModal').modal();
+      });
+      
+    });
+    $$('.item').hover(function(event) {
+      /* Act on the event */
+      $$(this).toggleClass('item-hover');
+    });
+  })
+</script>
+
+<div class="container">
+
+<div class="row">
+
+  <div class="">
+    <h2>导师库<small>&nbsp;83</small></h2>
+  </div>
+
+  <hr>
+
+$for i in range(40):
+  <div class="col-sm-6 col-md-2">
+    <div class="thumbnail item">
+      <img src="http://cs.hit.edu.cn/sites/default/files/styles/thumbnail/public/t_chenghd.jpg" alt="...">
+      <div class="caption">
+        <h4>承恒达</h4>
+        <p>人工智能与信息处理</p>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+</div><!-- /.modal -->
+
+$:render.common.foot()

@@ -1,0 +1,70 @@
+$def with (session)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>$config.site_name</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Le styles -->
+  <link href="$config.static/css/bootstrap.css" rel="stylesheet">
+  <!-- <link href="$config.static/css/bootstrap-theme.css" rel="stylesheet"> -->
+  <link href="$config.static/css/jqplot.min.css" rel="stylesheet">
+  <link href="$config.static/css/daterangepicker-bs3.css" rel="stylesheet">
+  <link href="$config.static/css/todc-bootstrap.css" rel="stylesheet">
+  <link href="$config.static/css/sticky-footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  </style>
+     
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  <script src="$config.static/js/jquery.min.js"></script>
+  <script src="$config.static/js/bootstrap.min.js"></script>
+  <!-- // <script src="$config.static/js/highcharts.js"></script> -->
+  <script src="$config.static/js/jqplot.min.js"></script>
+  <script src="$config.static/js/moment.min.js"></script>
+  <script src="$config.static/js/daterangepicker.js"></script>
+
+</head>
+         
+<body>
+
+<div id="wrap">
+
+<nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">SELECT</a>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav">
+      <li class=""><a href="/student/teacher/all">导师库</a></li>
+      <li class=""><a href="/student/teacher/my">我的导师</a></li>
+      <li class=""><a href="/student/info">个人信息</a></li>
+      <li class=""><a href="/user/password">密码修改</a></li>
+      <li class=""><a href="/teacher/info">teacher个人信息</a></li>
+      <li class=""><a href="/teacher/student/my">我的学生</a></li>
+$if session.is_admin: <li class=""><a href="/admin">系统管理</a></li>
+
+    </ul>
+    <p class="navbar-text pull-right">$session.name 老师您好！您所负责的年级是：<strong>计算机学院$session.grade</strong>  <a href="/logout" class="navbar-link">退出</a></p>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"></a></li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+
