@@ -1,4 +1,4 @@
-$def with (session, route)
+$def with (session, route, data)
 $:render.common.header(session, route)
 
 
@@ -10,7 +10,7 @@ $:render.common.header(session, route)
   $$(function(){
     $$('.item').click(function(event) {
       /* Act on the event */
-      $$('#myModal').load('/student/teacher/info',
+      $$('#myModal').load('/student/teacher/info/'+$$(this).data('id'),
         function(){
         /* Stuff to do after the page is loaded */
           $$('#myModal').modal();
@@ -33,17 +33,17 @@ $:render.common.header(session, route)
 
   <hr>
 
-$for i in range(83):
+$for t in data['teacher']:
   <div class="col-sm-6 col-md-2">
-    <div class="thumbnail item">
+    <div class="thumbnail item" data-id='$t.id'>
       <img src="/static/img/t_chenghd.jpg" alt="">
       <div class="caption">
-        <h4>承恒达<small>教授 博导</small></h4>
-        <p>人工智能与信息处理</p>
+        <h4>$t.name<small>&nbsp;&nbsp;$t.pos</small></h4>
+        <p style=''>$t.lab</p>
       </div>
       <div class="progress">
         <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
-          5/6
+          $t.has/$t.total
         </div>
       </div>
     </div>

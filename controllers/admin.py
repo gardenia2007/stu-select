@@ -19,7 +19,9 @@ class Index(Admin):
 		# grades = list(db.select('grade'))
 		# users = list(db.query('select * from user, grade where u_grade = g_id'))
 		# info = list(db.query('select g_name, count(*) as count from stu, grade where s_grade = g_id group by s_grade'))
-		data = {'grades':[], 'users':[], 'info':[]}
+		teacher = db.select('teacher')
+		student = db.select('student')
+		data = {'grades':[], 'users':[], 'info':[], 'teacher':teacher, 'student':student}
 		return render.admin.admin(web.ctx.session, 'admin', data)
 	def POST(self):
 		pass
@@ -62,14 +64,15 @@ class AddTeacher(Admin):
 		pass
 	def POST(self):
 		i = web.input()
-		db.insert('user', u_name=i.name, u_pass=i.password, u_grade=i.grade, u_role=i.role, u_keyword='')
+		db.insert('teacher', name=i.name, pw=i.pw, pos=i.pos, email=i.email,\
+			office=i.office, phone=i.phone, intro=i.intro)
 		web.seeother('/admin')
 
 class DelTeacher(Admin):
 	def __init__(self):
 		Admin.__init__(self)
 	def GET(self, u_id):
-		db.delete('user', where="u_id=$u_id", vars={'u_id':u_id})
+		db.delete('teacher', where="id=$id", vars={'id':u_id})
 		web.seeother('/admin')
 	def POST(self):
 		pass

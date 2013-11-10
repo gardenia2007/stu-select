@@ -54,7 +54,7 @@ $:render.common.header(session, route)
           <div class="form-group">
             <label class="col-lg-5 control-label">登录密码</label>
             <div class="col-lg-7">
-              <input class="form-control" class="input" type="text" name="password">
+              <input class="form-control" class="input" type="text" name="pw">
             </div>
           </div>
           
@@ -75,9 +75,17 @@ $:render.common.header(session, route)
           <div class="form-group">
             <label class="col-lg-5 control-label">办公地点</label>
             <div class="col-lg-7">
-              <input class="form-control" class="input" type="text" name="addr">
+              <input class="form-control" class="input" type="text" name="office">
             </div>
           </div> 
+
+          <div class="form-group">
+            <label class="col-lg-5 control-label">职称</label>
+            <div class="col-lg-7">
+              <input class="form-control" class="input" type="text" name="pos">
+            </div>
+          </div> 
+
 
           <div class="form-group">
             <label class="col-lg-5 control-label">介绍信息</label>
@@ -158,25 +166,25 @@ $:render.common.header(session, route)
         </form>
       </div>
 
-      <!-- 删除导师用户 -->
+      <!-- 管理导师用户 -->
       <div class="tab-pane" id="manage-teacher">
         <table class="table table-hover table-striped" style="margin-top:20px">
           <tr>
             <th>#</th>
             <th>姓名</th>
-            <th>年级</th>
-            <th>角色</th>
+            <th>职称</th>
+            <th>实验室</th>
             <th>操作</th>
           </tr>
-        $for u in data['users']:
+        $for u in data['teacher']:
           <tr>
             <td>$loop.index</td>
-            <td>$u.u_name</td>
-            <td>$u.g_name</td>
-            <td>$u.u_role</td>
+            <td>$u.name</td>
+            <td>$u.pos</td>
+            <td>$u.lab</td>
             <td>
               <a href="/teacher/info" class="btn btn-primary" target="_blank">编辑</a>
-              <a href="/admin/deluser/$u.u_id" class="btn btn-danger" onclick="return confirm('确认删除 $u.u_name 的帐号吗？\n该操作无法取消。');">删除</a>
+              <a href="/admin/del/teacher/$u.id" class="btn btn-danger" onclick="return confirm('确认删除 $u.name 的帐号吗？\n该操作无法取消。');">删除</a>
             </td>
           </tr>
         </table>
@@ -192,12 +200,12 @@ $:render.common.header(session, route)
             <th>班号</th>
             <th>导师</th>
           </tr>
-        $for i in range(10):
+        $for u in data['student']:
           <tr>
             <td>$loop.index</td>
-            <td>1100300220</td>
-            <td>李洪祥</td>
-            <td>1103105</td>
+            <td>$u.no</td>
+            <td>$u.name</td>
+            <td>$u.classno</td>
             <td>暂无</td>
           </tr>
         </table>

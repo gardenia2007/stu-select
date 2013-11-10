@@ -1,4 +1,4 @@
-$def with ()
+$def with (data)
 
   <style type="text/css">
     dd{margin-bottom:10px}
@@ -8,27 +8,30 @@ $def with ()
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">崔刚<small>教授 博导</small></h4>
+        <h4 class="modal-title" id="myModalLabel">$data.name<small>$data.pos</small></h4>
       </div>
       <div class="modal-body">
 
         <dl>
 
-          <dt>联系电话</dt>
-          <dd>1808238389</dd>
-
           <dt>电子邮箱</dt>
-          <dd>gardenia@hit.edu.cn</dd>
+          <dd>$data.email</dd>
+
+          <dt>联系电话</dt>
+          <dd>$data.phone</dd>
+
+          <dt>实验室</dt>
+          <dd>$data.lab</dd>
 
           <dt>办公地点</dt>
-          <dd>综合楼709</dd>
+          <dd>$data.office</dd>
 
           <dt>信息简介</dt>
-          <dd>崔刚，教授，博士生导师，中国计算机学会高级会员，中国计算机学会容错计算专业委员会委员，哈工大计算机学院容错/嵌入/汽车计算研究中心主任，南京邮电大学兼职教授，浙江台州路桥科技创新孵化基地哈工大国家技术转移中心主任专家。研究方向：计算机体系结构、空间计算技术、可信性计算技术、容错计算技术、嵌入计算技术、（云）泛在计算技术、移动计算技术、汽车计算技术、物联网技术、传感器网技术、车载/车联网技术、工业控制技术、信息安全技术等。主持负责承担研究完成了多项国家863、部委重大科研项目及各种基金，典型如“神舟号”载人宇宙飞船容错计算机样机研制，863哈工大TS-1微小卫星容错计算机样机研制，多项多型号多种工作环境及军民任务要求的容错计算机系统及网络容错服务器系统研制，导弹武器红外仿真系统研制，工业控制容错系统研制，汽车网络控制系统，车载移动Ad Hoc，VANET系统，GPS/GSM/GIS移动定位系统，高倍率动力电池管理控制系统，声音识别系统，磁盘测试系统，穿戴SoC计算机系统,嵌入在线仿真系统等等。获得部级科技进步一等奖1项，二等奖2项，三等奖3项，发表国内外科技论文近200篇，编著教材1部，发明专利近40项。培养博士研究生20多名，硕士研究生50多名，本科生近百名。</dd>
+          <dd>$data.intro</dd>
 
         </dl>
 
-        <div class="alert alert-info">已有<span class="badge">3</span>人选择该导师，还有<span class="badge">2</span>个名额</div>
+        <div class="alert alert-info">已有<span class="badge">$data.has</span>人选择该导师，还有<span class="badge">$(data.total - data.has)</span>个名额</div>
       </div>
       <div class="modal-footer">
         <a class="btn btn-primary" href="/student/choose/1">选择该导师</a>
