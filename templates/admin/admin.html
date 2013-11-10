@@ -99,6 +99,7 @@ $:render.common.header(session, route)
       <div class="tab-pane" id="add-student">
         <form class="form-horizontal" role="form" style="width:400px;margin-top:40px" method="post" action="/admin/add/student" enctype="multipart/form-data">
 
+
           <div class="form-group">
             <label class="col-lg-5 control-label">姓名</label>
             <div class="col-lg-7">
@@ -107,9 +108,23 @@ $:render.common.header(session, route)
           </div>
 
           <div class="form-group">
+            <label class="col-lg-5 control-label">学号</label>
+            <div class="col-lg-7">
+              <input class="form-control" type="text" name="no">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-lg-5 control-label">班号</label>
+            <div class="col-lg-7">
+              <input class="form-control" type="text" name="classno">
+            </div>
+          </div>
+
+          <div class="form-group">
             <label class="col-lg-5 control-label">登录密码</label>
             <div class="col-lg-7">
-              <input class="form-control" class="input" type="text" name="password">
+              <input class="form-control" class="input" type="text" name="pw">
             </div>
           </div>
           

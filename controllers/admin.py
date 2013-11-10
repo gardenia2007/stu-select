@@ -16,10 +16,10 @@ class Index(Admin):
 	def __init__(self):
 		Admin.__init__(self)
 	def GET(self):
-		grades = list(db.select('grade'))
-		users = list(db.query('select * from user, grade where u_grade = g_id'))
-		info = list(db.query('select g_name, count(*) as count from stu, grade where s_grade = g_id group by s_grade'))
-		data = {'grades':grades, 'users':users, 'info':info}
+		# grades = list(db.select('grade'))
+		# users = list(db.query('select * from user, grade where u_grade = g_id'))
+		# info = list(db.query('select g_name, count(*) as count from stu, grade where s_grade = g_id group by s_grade'))
+		data = {'grades':[], 'users':[], 'info':[]}
 		return render.admin.admin(web.ctx.session, 'admin', data)
 	def POST(self):
 		pass
@@ -51,7 +51,8 @@ class AddStudent(Admin):
 		pass
 	def POST(self):
 		i = web.input()
-		db.insert('user', u_name=i.name, u_pass=i.password, u_grade=i.grade, u_role=i.role, u_keyword='')
+		db.insert('student', name=i.name, pw=i.pw, no=i.no, email=i.email,\
+			classno=i.classno, phone=i.phone, intro=i.intro)
 		web.seeother('/admin')
 
 class AddTeacher(Admin):

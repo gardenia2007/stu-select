@@ -3,7 +3,9 @@ import web
 #db = web.database(dbn='mysql', db='www', user='www', pw='www')
 
 render = web.template.render('templates/', cache=False)
-db = web.database(dbn='sqlite', db='db/testdb')
+#db = web.database(dbn='sqlite', db='db/testdb')
+db = web.database(dbn='mysql', db='select', user='root', pw='root')
+
 
 web.config.debug = True
 
