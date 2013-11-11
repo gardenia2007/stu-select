@@ -45,7 +45,13 @@ class Info(User):
 	def __init__(self):
 		User.__init__(self)
 	def GET(self):
-		return render.student.info(web.ctx.session, 'student_info')
+		data = db.select('student', where='id=%d'%(web.ctx.session.uid))[0]
+		return render.student.info(web.ctx.session, 'student_info', data)
+	def POST(self):
+		i = web.input()
+		db.update('student', where='id=%d'%(web.ctx.session.uid), email=i.email,\
+			phone=i.phone, classno=i.classno, intro=i.intro)
+		return self.success('个人信息修改成功！')
 
 class Choose(User):
 	def __init__(self):

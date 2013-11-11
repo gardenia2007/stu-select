@@ -12,5 +12,7 @@ class User:
 			raise web.seeother('/login')
 	def error(self, msg):
 		return setting.render.error_page(web.ctx.session, '', msg)
+	def success(self, msg):
+		return setting.render.success_page(web.ctx.session, '', msg)
 
 
