@@ -21,12 +21,12 @@ $:render.common.header(session, route)
     <hr>
   </div>
 
-  <form class="form-horizontal" role="form">
+  <form class="form-horizontal" role="form" method='post' action=''>
 
     <div class="form-group">
       <label for="inputEmail3" class="col-sm-2 control-label">姓名</label>
       <div class="col-sm-10">
-      	<p class="form-control-static">李某</p>
+      	<p class="form-control-static">$session.name</p>
       </div>
     </div>
 
@@ -50,6 +50,8 @@ $:render.common.header(session, route)
         <input type="password" name="new_password2" class="form-control" id="input3" placeholder="请再次输入新密码">
       </div>
     </div>
+
+    <hr>
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
