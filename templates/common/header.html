@@ -57,14 +57,16 @@ $def if_active(ii='teacher_all'):
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
-      <li class="$if_active('teacher_all')"><a href="/student/teacher/all">导师库</a></li>
-      <li class="$if_active('teacher_my')"><a href="/student/teacher/my">我的导师</a></li>
-      <li class="$if_active('student_info')"><a href="/student/info">个人信息</a></li>
-      <li class="$if_active('student_my')"><a href="/teacher/student/my">我的学生</a></li>
-      <li class="$if_active('teacher_info')"><a href="/teacher/info">个人信息</a></li>
-$if session.is_admin: <li class="$if_active('admin')"><a href="/admin">系统管理</a></li>
+      $if session.role == 'student':
+        <li class="$if_active('teacher_all')"><a href="/student/teacher/all">导师库</a></li>
+        <li class="$if_active('teacher_my')"><a href="/student/teacher/my">我的导师</a></li>
+        <li class="$if_active('student_info')"><a href="/student/info">个人信息</a></li>
+      $if session.role == 'teacher':
+        <li class="$if_active('student_my')"><a href="/teacher/student/my">我的学生</a></li>
+        <li class="$if_active('teacher_info')"><a href="/teacher/info">个人信息</a></li>
+      $if session.is_admin:
+        <li class="$if_active('admin')"><a href="/admin">系统管理</a></li>
       <li class="$if_active('update_pw')"><a href="/user/password">密码修改</a></li>
-
     </ul>
     <p class="navbar-text pull-right">$session.name 您好！ <a href="/logout" class="navbar-link">退出</a></p>
     <ul class="nav navbar-nav navbar-right">

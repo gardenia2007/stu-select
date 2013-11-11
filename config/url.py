@@ -25,9 +25,12 @@ urls = (
     "/student/delete/(\d+)",    pre_fix + "student.Delete",
 
     "/teacher",                 pre_fix + "teacher.Index",
-    "/teacher/info",            pre_fix + "teacher.Info",
     "/teacher/student/my",      pre_fix + "teacher.StudentMy",
-    "/teacher/student/info",    pre_fix + "teacher.StudentInfo",
+    "/teacher/student/info/(\d+)",pre_fix + "teacher.StudentInfo",
+    "/teacher/info",            pre_fix + "teacher.Info",
+    "/teacher/pass/(\d+)",    pre_fix + "teacher.Pass",
+    "/teacher/fail/(\d+)",    pre_fix + "teacher.Fail",
+
 
     "/user",                    pre_fix + "user.Index",
     "/user/password",           pre_fix + "user.UpdatePw",

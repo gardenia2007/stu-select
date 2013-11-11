@@ -1,4 +1,4 @@
-$def with (session, route)
+$def with (session, route, data)
 $:render.common.header(session, route)
 
 
@@ -11,7 +11,7 @@ $:render.common.header(session, route)
   $$(function(){
     $$('.show-info').click(function(event) {
       /* Act on the event */
-      $$('#myModal').load('/teacher/student/info',
+      $$('#myModal').load('/teacher/student/info/'+$$(this).data('id'),
         function(){
         /* Stuff to do after the page is loaded */
           $$('#myModal').modal();
@@ -38,17 +38,22 @@ $:render.common.header(session, route)
       <th>状态</th>
       <th>操作</th>
     </tr>
-  $for i in range(5):
+  $for i in data:
     <tr>
       <td>$loop.index</td>
-      <td>李红霞</td>
-      <td>1100300220</td>
+      <td>$i.name</td>
+      <td>$i.no</td>
       <td>
+      $if i.status=='wait':
         <span class="label label-default">未审核</span>
-        <!-- <span class="label label-success">通过</span> -->
-        <!-- <span class="label label-danger">未通过</span> -->
+      $elif i.status=='pass':
+        <span class="label label-success">通过</span>
+      $elif i.status=='fail':
+        <span class="label label-danger">未通过</span>
+      $else:
+        <span class="label label-danger">其他</span>
       </td>
-      <td><button class="btn btn-primary show-info">查看详细信息</button></td>
+      <td><button data-id="$i.id" class="btn btn-primary show-info">查看详细信息</button></td>
     </tr>
   </table>
 

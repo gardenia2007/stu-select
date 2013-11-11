@@ -21,7 +21,10 @@ $if data is None:
   </div>
 $else:
   <div class="">
-    <h2>我的导师<a href="/student/delete/$data.id" class="btn btn-primary pull-right">删除导师</a></h2>
+    <h2>我的导师
+    $if data.status!='pass':
+      <a href="/student/delete/$data.id" class="btn btn-primary pull-right">删除导师</a>
+    </h2>
     <hr>
   </div>
   <dl class="dl-horizontal">

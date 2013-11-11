@@ -65,8 +65,11 @@ class Choose(User):
 			pre_st = db.select('student', where='id=%d'%(web.ctx.session.uid), what='st')[0].st
 			if pre_st > 0:
 				# delete previous teacher
+				pre = db.select('st', where='id=%d'%(pre_st))[0]
+				if pre.status == 'pass':
+					# 原来的已经通过了就不能再选择了
+					raise Exception
 				db.query("UPDATE st SET status='delete' where id = %d"%(pre_st))
-				pre_teacher = db.select('st', where='id=%d'%(pre_st))[0].teacher
 				db.query("UPDATE teacher SET has = has - 1 WHERE id = $id", vars={'id':pre_teacher})
 			# choose new teacher
 			db.query("UPDATE teacher SET has = has + 1 WHERE id = $id", vars={'id':tid})
@@ -88,10 +91,12 @@ class Delete(User):
 	def GET(self, tid):
 		t = db.transaction()
 		try:
+			st = db.select('st', dict(tid=tid), where='teacher=$tid',\
+				order='time DESC', limit=1)[0]
+			if st.status=='pass':
+				raise
 			db.query("UPDATE teacher SET has = has - 1 WHERE id = $id", vars={'id':tid})
-			st_id = db.select('st', dict(tid=tid), where='teacher=$tid',\
-				order='time DESC', limit=1)[0].id
-			db.query("UPDATE st SET status='delete' where id = %d"%(st_id))
+			db.query("UPDATE st SET status='delete' where id = %d"%(st.id))
 			db.update('student', where='id=%d'%(web.ctx.session.uid), st=0)
 		except Exception, e:
 			t.rollback()

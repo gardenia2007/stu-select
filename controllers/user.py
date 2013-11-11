@@ -12,7 +12,7 @@ class Index(User):
 	def __init__(self):
 		User.__init__(self)
 	def GET(self):
-		raise web.seeother('/status/value')
+		pass
 	def POST(self):
 		pass
 

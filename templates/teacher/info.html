@@ -1,4 +1,4 @@
-$def with (session, route)
+$def with (session, route, d)
 $:render.common.header(session, route)
 
 
@@ -21,42 +21,58 @@ $:render.common.header(session, route)
     <hr>
   </div>
 
-  <form class="form-horizontal" role="form">
+  <form class="form-horizontal" role="form" method='post' action=''>
 
     <div class="form-group">
       <label for="inputEmail1" class="col-sm-2 control-label">姓名</label>
       <div class="col-sm-10">
-        <p class="form-control-static">李某</p>
+        <p class="form-control-static">$d.name</p>
       </div>
     </div>
 
     <div class="form-group">
       <label for="inputEmail3" class="col-sm-2 control-label">电子邮箱</label>
       <div class="col-sm-10">
-        <input type="email" name="email" class="form-control" id="inputEmail3" placeholder="常用电子邮箱">
+        <input value='$d.email' type="email" name="email" class="form-control" id="inputEmail3" placeholder="常用电子邮箱">
       </div>
     </div>
     
     <div class="form-group">
       <label for="inputEmail4" class="col-sm-2 control-label">联系电话</label>
       <div class="col-sm-10">
-        <input type="tel" name="phone" class="form-control" id="inputEmail4" placeholder="联系电话">
+        <input value='$d.phone' type="tel" name="phone" class="form-control" id="inputEmail4" placeholder="联系电话">
       </div>
     </div>
     
     <div class="form-group">
       <label for="inputEmail5" class="col-sm-2 control-label">办公地点</label>
       <div class="col-sm-10">
-        <input type="tel" name="phone" class="form-control" id="inputEmail5" placeholder="办公室房间号">
+        <input value='$d.office' type="tel" name="office" class="form-control" id="inputEmail5" placeholder="办公室房间号">
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="inputEmail50" class="col-sm-2 control-label">实验室</label>
+      <div class="col-sm-10">
+        <input value='$d.lab' type="tel" name="lab" class="form-control" id="inputEmail50" placeholder="办公室房间号">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputEmail51" class="col-sm-2 control-label">职称</label>
+      <div class="col-sm-10">
+        <input value='$d.pos' type="tel" name="pos" class="form-control" id="inputEmail51" placeholder="办公室房间号">
       </div>
     </div>
 
     <div class="form-group">
       <label for="inputEmail6" class="col-sm-2 control-label">个人介绍</label>
       <div class="col-sm-10">
-        <textarea row='4' name='intro' class="form-control" id="inputEmail6" placeholder="个人情况介绍"></textarea>
+        <textarea row='4' name='intro' class="form-control" id="inputEmail6" placeholder="个人情况介绍">$d.intro</textarea>
       </div>
     </div>
+
+    <hr>
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">

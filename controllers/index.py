@@ -41,7 +41,7 @@ class Login:
 			return False
 	def POST(self):
 		i = web.input()
-		if i.username == 'admin' and i.password == 'asdf':
+		if i.username == 'admin' and i.password == 'admin':
 			web.ctx.session.name = 'Admin'
 			web.ctx.session.role= 'admin'
 			web.ctx.session.is_login = True
