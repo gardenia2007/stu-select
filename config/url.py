@@ -22,7 +22,7 @@ urls = (
     "/student/teacher/info/(\d+)",pre_fix + "student.TeacherInfo",
     "/student/info",            pre_fix + "student.Info",
     "/student/choose/(\d+)",    pre_fix + "student.Choose",
-
+    "/student/delete/(\d+)",    pre_fix + "student.Delete",
 
     "/teacher",                 pre_fix + "teacher.Index",
     "/teacher/info",            pre_fix + "teacher.Info",

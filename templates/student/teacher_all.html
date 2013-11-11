@@ -4,6 +4,8 @@ $:render.common.header(session, route)
 
 <style type="text/css">
   .item-hover{cursor: pointer;background-color: #ffc;}
+  .item .caption{height: 103px}
+  .progress{margin-bottom: 10px}
 </style>
 
 <script type="text/javascript">
@@ -32,7 +34,17 @@ $:render.common.header(session, route)
   </div>
 
   <hr>
-
+$def get_color(p):
+  $if p <= 20:
+    info
+  $elif p <= 40:
+    haha
+  $elif p <= 60:
+    success
+  $elif p <= 80:
+    warning
+  $else:
+    danger
 $for t in data['teacher']:
   <div class="col-sm-6 col-md-2">
     <div class="thumbnail item" data-id='$t.id'>
@@ -42,7 +54,7 @@ $for t in data['teacher']:
         <p style=''>$t.lab</p>
       </div>
       <div class="progress">
-        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+        <div class="progress-bar progress-bar-$get_color(t.has*100/t.total)" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: $(t.has*100/t.total)%;">
           $t.has/$t.total
         </div>
       </div>

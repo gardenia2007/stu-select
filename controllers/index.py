@@ -23,35 +23,38 @@ class Logout:
     def POST(self):
         pass
 
-
-
 class Login:
 	def GET(self):
 		return render.login()
+	def login_as(self, role, i):
+		sql = "SELECT * FROM %s WHERE name=$n AND pw=$p"%(role)
+		results = list(db.query(sql, vars={'n':i.username, 'p':i.password}))
+		if len(results) >= 1:
+			web.ctx.session.is_login = True
+			web.ctx.session.uid = results[0].id
+			web.ctx.session.name = results[0].name
+			web.ctx.session.role= role
+			web.ctx.session.is_admin = False
+			web.seeother('/')
+			return True
+		else:
+			return False
 	def POST(self):
-		i = web.input(	)
+		i = web.input()
 		if i.username == 'admin' and i.password == 'asdf':
 			web.ctx.session.name = 'Admin'
+			web.ctx.session.role= 'admin'
 			web.ctx.session.is_login = True
 			web.ctx.session.is_admin = True
 			web.seeother('/')
 			return
 		# results = list(db.select('user', where=web.db.sqlwhere({'name':i.username, 'password':i.password})))
-		sql = "select * from user, grade where u_name=$n and u_pass=$p and u_grade = g_id"
-		results = list(db.query(sql, vars={'n':i.username, 'p':i.password}))
-		web.ctx.session.count += 1
-		if len(results) == 1:
-			web.ctx.session.is_login = True
-			web.ctx.session.uid = results[0].u_id
-			web.ctx.session.name = results[0].u_name
-			web.ctx.session.grade = results[0].g_name
-			web.ctx.session.grade_id = '('+str(results[0].g_id)+')'
-			if results[0].u_role == 'admin':
-				web.ctx.session.is_admin = True
-			web.seeother('/')
+		if(self.login_as('student', i)):
+			return
+		elif(self.login_as('teacher', i)):
+			return
 		else:
-			return 'Fail, %s' % web.ctx.session.count
-
+			return render.login()
 
 class DBtest:
     def GET(self):
