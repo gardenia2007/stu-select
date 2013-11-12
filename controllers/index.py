@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*- 
+
 import web
 import re
 import base64
@@ -27,7 +29,10 @@ class Login:
 	def GET(self):
 		return render.login()
 	def login_as(self, role, i):
-		sql = "SELECT * FROM %s WHERE name=$n AND pw=$p"%(role)
+		if role == 'student': # 学生用学号登录
+			sql = "SELECT * FROM %s WHERE no=$n AND pw=$p"%(role)
+		else: # 教师用姓名
+			sql = "SELECT * FROM %s WHERE name=$n AND pw=$p"%(role)
 		results = list(db.query(sql, vars={'n':i.username, 'p':i.password}))
 		if len(results) >= 1:
 			web.ctx.session.is_login = True
@@ -41,15 +46,16 @@ class Login:
 			return False
 	def POST(self):
 		i = web.input()
-		if i.username == 'admin' and i.password == 'admin':
-			web.ctx.session.name = 'Admin'
-			web.ctx.session.role= 'admin'
-			web.ctx.session.is_login = True
-			web.ctx.session.is_admin = True
-			web.seeother('/')
+		if i.username == 'admin':
+			r = list(db.select('admin', where=web.db.sqlwhere({'name':i.username, 'pw':i.password})))
+			if len(r) >= 1:
+				web.ctx.session.name = 'Admin'
+				web.ctx.session.role= 'admin'
+				web.ctx.session.is_login = True
+				web.ctx.session.is_admin = True
+			web.seeother('/admin')
 			return
-		# results = list(db.select('user', where=web.db.sqlwhere({'name':i.username, 'password':i.password})))
-		if(self.login_as('student', i)):
+		elif(self.login_as('student', i)):
 			return
 		elif(self.login_as('teacher', i)):
 			return

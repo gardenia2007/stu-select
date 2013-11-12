@@ -70,7 +70,7 @@ class Choose(User):
 					# 原来的已经通过了就不能再选择了
 					raise Exception
 				db.query("UPDATE st SET status='delete' where id = %d"%(pre_st))
-				db.query("UPDATE teacher SET has = has - 1 WHERE id = $id", vars={'id':pre_teacher})
+				db.query("UPDATE teacher SET has = has - 1 WHERE id = $id", vars={'id':pre.teacher})
 			# choose new teacher
 			db.query("UPDATE teacher SET has = has + 1 WHERE id = $id", vars={'id':tid})
 			st_id = db.insert('st', student=web.ctx.session.uid, teacher=tid, status='wait')

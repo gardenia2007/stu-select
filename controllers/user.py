@@ -27,10 +27,17 @@ class UpdatePw(User):
 			return self.error('两次输入的新密码不匹配，请重新输入!')
 		if len(i.new_password) <= 3:
 			return self.error('新密码长度太短！<br>为了帐号安全，请设置比较复杂的密码。')
-		old = db.select(role, where=web.db.sqlwhere(\
-			{'id':web.ctx.session.uid, 'pw':i.old_password}))
+		if web.ctx.session.is_admin == True:
+			vars = {'name':'admin', 'pw':i.old_password}
+		else:
+			vars = {'id':web.ctx.session.uid, 'pw':i.old_password}
+		old = db.select(role, where=web.db.sqlwhere(vars))
 		if len(old) <= 0:
 			return self.error('原密码不正确，请重新输入!')
-		db.update(role, where=web.db.sqlwhere({'id':web.ctx.session.uid}), pw=i.new_password)
+		if web.ctx.session.is_admin == True:
+			vars = {'name':'admin'}
+		else:
+			vars = {'id':web.ctx.session.uid}
+		db.update(role, where=web.db.sqlwhere(vars), pw=i.new_password)
 		return self.success('密码修改成功！')
 		

@@ -16,35 +16,53 @@ class Index(Admin):
 	def __init__(self):
 		Admin.__init__(self)
 	def GET(self):
-		# grades = list(db.select('grade'))
-		# users = list(db.query('select * from user, grade where u_grade = g_id'))
-		# info = list(db.query('select g_name, count(*) as count from stu, grade where s_grade = g_id group by s_grade'))
-		teacher = db.select('teacher')
-		student = db.select('student')
-		data = {'grades':[], 'users':[], 'info':[], 'teacher':teacher, 'student':student}
-		return render.admin.admin(web.ctx.session, 'admin', data)
-	def POST(self):
-		pass
+		return render.admin.admin(web.ctx.session, 'admin', {})
+
+class InfoStudent(Admin):
+	def __init__(self):
+		Admin.__init__(self)
+	def GET(self):
+		student = db.query('SELECT *, student.name as stu_name, teacher.name as tea_name from student, st, teacher where st.id = student.st and teacher.id=st.teacher')
+		return render.admin.info_student(web.ctx.session, 'info-student', student)
+
+class InfoTeacher(Admin):
+	def __init__(self):
+		Admin.__init__(self)
+	def GET(self):
+		teacher = list(db.select('teacher'))
+		st = {}
+		for t in teacher:
+			st[t.id] = list(db.query("SELECT student.name from student, st where st.teacher=%d and st.status='pass' and st.student=student.id"%(t.id)))
+		data = {'teacher':teacher, 'st':st}
+		return render.admin.info_teacher(web.ctx.session, 'info-teacher', data)
+
+class ManageTeacher(Admin):
+	def __init__(self):
+		Admin.__init__(self)
+	def GET(self):
+		teacher = list(db.select('teacher'))
+		return render.admin.manage_teacher(web.ctx.session, 'manage-teacher', teacher)
 
 class Upload(Admin):
 	def __init__(self):
 		Admin.__init__(self)
-	def GET(self):
-		pass
 	def POST(self):
-		grade = web.input().grade
-		db.query('delete from stu where s_grade = $g', vars={'g':grade})
-		# uploaded csv file
-		f = csv.reader(web.input(file={}).file.file)
-		for s_class, s_no, s_name, s_renren in f:
-			if s_class[:3] == codecs.BOM_UTF8:
-				s_class = s_class[3:]
-			if s_class == '' or s_renren == '':
-				continue
-			web.debug(db.query('insert into stu values ($no, NULL, $n, $g, $c, $r)', \
-				vars={'no':buffer(s_no.decode('utf-8')), 'n':buffer(s_name.decode('utf-8')), 'g':int(grade),\
-					'c':int(s_class), 'r':int(s_renren.decode('utf-8'))}))
-		raise web.seeother('/admin')
+		t = db.transaction()
+		try:
+			db.query('DELETE from student where 1')
+			db.query('DELETE from st where 1')
+			db.query('UPDATE teacher set has=0 where 1')
+			f = csv.reader(web.input(file={}).file.file)
+			for s_class, s_no, s_name, s_email, s_phone in f:
+				db.query('INSERT into student values (NULL, $n, $no, $no, $c, $e, $p, "", 0)', \
+					vars={'no':s_no, 'n':s_name, 'c':s_class, 'e':s_email, 'p':s_phone})
+		except Exception, e:
+			t.rollback()
+			# print e
+			return self.error('未知错误，请重试。')
+		else:
+			t.commit()
+			return self.success('上传成功')
 
 class AddStudent(Admin):
 	def __init__(self):
@@ -94,3 +112,14 @@ class StatusStudent(Admin):
 	def POST(self):
 		pass
 
+class UpdateTeacherInfo(Admin):
+	def __init__(self):
+		Admin.__init__(self)
+	def GET(self, tid):
+		data = db.select('teacher', where='id=%s'%(int(tid)))[0]
+		return render.teacher.info(web.ctx.session, 'teacher_info', data)
+	def POST(self, tid):
+		i = web.input()
+		db.update('teacher', where='id=%s'%(int(tid)), email=i.email,\
+			phone=i.phone, office=i.office, intro=i.intro, lab=i.lab)
+		return self.success('教师信息修改成功！')

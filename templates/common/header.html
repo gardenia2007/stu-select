@@ -65,6 +65,9 @@ $def if_active(ii='teacher_all'):
         <li class="$if_active('student_my')"><a href="/teacher/student/my">我的学生</a></li>
         <li class="$if_active('teacher_info')"><a href="/teacher/info">个人信息</a></li>
       $if session.is_admin:
+        <li class="$if_active('info-student')"><a href="/admin/info/student">学生统计</a></li>
+        <li class="$if_active('info-teacher')"><a href="/admin/info/teacher">导师统计</a></li>
+        <li class="$if_active('manage-teacher')"><a href="/admin/manage/teacher">导师管理</a></li>
         <li class="$if_active('admin')"><a href="/admin">系统管理</a></li>
       <li class="$if_active('update_pw')"><a href="/user/password">密码修改</a></li>
     </ul>
