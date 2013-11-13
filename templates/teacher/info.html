@@ -17,7 +17,7 @@ $:render.common.header(session, route)
 <div class="row">
 
   <div class="">
-    <h2>个人信息编辑<small>&nbsp;</small></h2>
+    <h2>个人信息编辑<small>&nbsp;$d.name</small></h2>
     <hr>
   </div>
 
@@ -27,6 +27,13 @@ $:render.common.header(session, route)
       <label for="inputEmail1" class="col-sm-2 control-label">姓名</label>
       <div class="col-sm-10">
         <p class="form-control-static">$d.name</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputEmail9" class="col-sm-2 control-label">Photo Url</label>
+      <div class="col-sm-10">
+        <input value='$d.photo' type="text" name="photo" class="form-control" id="inputEmail9" placeholder="Photo Url">
       </div>
     </div>
 

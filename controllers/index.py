@@ -40,7 +40,7 @@ class Login:
 			web.ctx.session.name = results[0].name
 			web.ctx.session.role= role
 			web.ctx.session.is_admin = False
-			web.seeother('/')
+			web.seeother('/'+role)
 			return True
 		else:
 			return False

@@ -103,7 +103,6 @@ class StatusTeacher(Admin):
 	def POST(self):
 		pass
 
-
 class StatusStudent(Admin):
 	def __init__(self):
 		Admin.__init__(self)
@@ -120,6 +119,9 @@ class UpdateTeacherInfo(Admin):
 		return render.teacher.info(web.ctx.session, 'teacher_info', data)
 	def POST(self, tid):
 		i = web.input()
+		# 设置默认头像
+		if len(i.photo)==0:
+			i.photo = setting.default_photo_url
 		db.update('teacher', where='id=%s'%(int(tid)), email=i.email,\
-			phone=i.phone, office=i.office, intro=i.intro, lab=i.lab)
+			phone=i.phone, office=i.office, intro=i.intro, lab=i.lab, photo=i.photo)
 		return self.success('教师信息修改成功！')

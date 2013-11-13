@@ -20,7 +20,7 @@ class TeacherMy(User):
 	def __init__(self):
 		User.__init__(self)
 	def GET(self):
-		r = db.query('SELECT st.status, teacher.* from student, st, teacher where st.id=student.st and teacher.id=st.teacher')
+		r = db.query('SELECT st.status, teacher.* from student, st, teacher where st.id=student.st and teacher.id=st.teacher and student.id=%d'%(web.ctx.session.uid))
 		if(len(r) <= 0):
 			data = None
 		else:
@@ -62,6 +62,8 @@ class Choose(User):
 			return self.error('此导师名额已满，请返回选择其他导师')
 		t = db.transaction()
 		try:
+			if web.ctx.session.role != 'student':
+				raise
 			pre_st = db.select('student', where='id=%d'%(web.ctx.session.uid), what='st')[0].st
 			if pre_st > 0:
 				# delete previous teacher

@@ -6,6 +6,7 @@ $:render.common.header(session, route)
   .item-hover{cursor: pointer;background-color: #ffc;}
   .item .caption{height: 103px}
   .progress{margin-bottom: 10px}
+  .item img{width:78px;height: 100px;}
 </style>
 
 <script type="text/javascript">
@@ -48,7 +49,8 @@ $def get_color(p):
 $for t in data['teacher']:
   <div class="col-sm-6 col-md-2">
     <div class="thumbnail item" data-id='$t.id'>
-      <img src="/static/img/t_chenghd.jpg" alt="">
+      <img src="$t.photo" alt="">
+      <!-- <img src="/static/img/t_chenghd.jpg" alt=""> -->
       <div class="caption">
         <h4>$t.name<small>&nbsp;&nbsp;$t.pos</small></h4>
         <p style=''>$t.lab</p>

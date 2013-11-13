@@ -1,4 +1,4 @@
-$def with (d)
+$def with (d, s)
 
   <style type="text/css">
     dd{margin-bottom:10px}
@@ -29,9 +29,12 @@ $def with (d)
         </dl>
 
       </div>
+      $def disable():
+        $if s == 'pass':
+          disabled='disabled'
       <div class="modal-footer">
-        <a href="/teacher/pass/$d.st" class="btn btn-primary">选择该学生</a>
-        <a href="/teacher/fail/$d.st" class="btn btn-danger">放弃</a>
+        <a href="/teacher/pass/$d.st" $:disable() class="btn btn-primary">选择该学生</a>
+        <a href="/teacher/fail/$d.st" $:disable() class="btn btn-danger">放弃</a>
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
       </div>
     </div><!-- /.modal-content -->

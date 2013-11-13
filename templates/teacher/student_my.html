@@ -11,7 +11,8 @@ $:render.common.header(session, route)
   $$(function(){
     $$('.show-info').click(function(event) {
       /* Act on the event */
-      $$('#myModal').load('/teacher/student/info/'+$$(this).data('id'),
+      $$('#myModal').load('/teacher/student/info/'
+          +$$(this).data('id')+'?status='+$$(this).data('status'),
         function(){
         /* Stuff to do after the page is loaded */
           $$('#myModal').modal();
@@ -53,7 +54,7 @@ $:render.common.header(session, route)
       $else:
         <span class="label label-danger">其他</span>
       </td>
-      <td><button data-id="$i.id" class="btn btn-primary show-info">查看详细信息</button></td>
+      <td><button data-id="$i.id" data-status="$i.status" class="btn btn-primary show-info">查看详细信息</button></td>
     </tr>
   </table>
 
