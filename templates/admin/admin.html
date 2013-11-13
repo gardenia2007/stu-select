@@ -18,7 +18,7 @@ $:render.common.header(session, route)
 
       <!-- 上传数据 -->
       <div class="tab-pane active" id="upload">
-        <form class="form-horizontal" role="form" style="width:700px;margin-top:40px" method="post" action="/admin/upload" enctype="multipart/form-data">
+        <form class="form-horizontal" role="form" style="width:700px;margin-top:40px" method="post" action="$config.root/admin/upload" enctype="multipart/form-data">
           <div class="alert alert-info">
             注意：上传新数据会清除系统原有的学生及导师选择数据！
           </div>
@@ -41,7 +41,7 @@ $:render.common.header(session, route)
 
       <!-- 添加导师用户 -->
       <div class="tab-pane" id="add-teacher">
-        <form class="form-horizontal" role="form" style="width:400px;margin-top:40px" method="post" action="/admin/add/teacher" enctype="multipart/form-data">
+        <form class="form-horizontal" role="form" style="width:400px;margin-top:40px" method="post" action="$config.root/admin/add/teacher" enctype="multipart/form-data">
           <div class="form-group">
             <label class="col-lg-5 control-label">姓名</label>
             <div class="col-lg-7">
@@ -105,7 +105,7 @@ $:render.common.header(session, route)
 
       <!-- 添加学生用户 -->
       <div class="tab-pane" id="add-student">
-        <form class="form-horizontal" role="form" style="width:400px;margin-top:40px" method="post" action="/admin/add/student" enctype="multipart/form-data">
+        <form class="form-horizontal" role="form" style="width:400px;margin-top:40px" method="post" action="$config.root/admin/add/student" enctype="multipart/form-data">
 
 
           <div class="form-group">

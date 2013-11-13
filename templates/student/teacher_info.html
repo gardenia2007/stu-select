@@ -36,7 +36,7 @@ $def disable(n):
       <div class="alert alert-info">已有<span class="badge">$data.has</span>人选择该导师，还有<span class="badge">$(data.total - data.has)</span>个名额</div>
     </div>
     <div class="modal-footer">
-      <a class="btn btn-primary" $disable(data.total - data.has) href="/student/choose/$data.id">选择该导师</a>
+      <a class="btn btn-primary" $disable(data.total - data.has) href="$config.root/student/choose/$data.id">选择该导师</a>
       <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
     </div>
   </div><!-- /.modal-content -->

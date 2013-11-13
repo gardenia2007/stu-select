@@ -16,14 +16,14 @@ $if data is None:
       <h3 class="panel-title">错误！</h3>
     </div>
     <div class="panel-body">
-      <p>你还没有选择导师，请先到<a href="/student/teacher/all">导师库</a>选择导师。</p>
+      <p>你还没有选择导师，请先到<a href="$config.root/student/teacher/all">导师库</a>选择导师。</p>
     </div>
   </div>
 $else:
   <div class="">
     <h2>我的导师
     $if data.status!='pass':
-      <a href="/student/delete/$data.id" class="btn btn-primary pull-right">删除导师</a>
+      <a href="$config.root/student/delete/$data.id" class="btn btn-primary pull-right">删除导师</a>
     </h2>
     <hr>
   </div>

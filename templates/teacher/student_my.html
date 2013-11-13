@@ -11,7 +11,7 @@ $:render.common.header(session, route)
   $$(function(){
     $$('.show-info').click(function(event) {
       /* Act on the event */
-      $$('#myModal').load('/teacher/student/info/'
+      $$('#myModal').load('$config.root/teacher/student/info/'
           +$$(this).data('id')+'?status='+$$(this).data('status'),
         function(){
         /* Stuff to do after the page is loaded */

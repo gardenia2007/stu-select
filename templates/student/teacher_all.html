@@ -1,7 +1,6 @@
 $def with (session, route, data)
 $:render.common.header(session, route)
 
-
 <style type="text/css">
   .item-hover{cursor: pointer;background-color: #ffc;}
   .item .caption{height: 103px}
@@ -13,7 +12,7 @@ $:render.common.header(session, route)
   $$(function(){
     $$('.item').click(function(event) {
       /* Act on the event */
-      $$('#myModal').load('/student/teacher/info/'+$$(this).data('id'),
+      $$('#myModal').load('$config.root/student/teacher/info/'+$$(this).data('id'),
         function(){
         /* Stuff to do after the page is loaded */
           $$('#myModal').modal();

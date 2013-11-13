@@ -1,4 +1,4 @@
-$def with ()
+$def with (success)
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -34,15 +34,19 @@ $def with ()
 
   <body>
     <div class="container">
-
       <h2 class="form-signin-heading text-center">Sign in with your Account</h2>
 
       <div class="card card-signin">
         <img class="img-circle profile-img" src="$config.static/img/avatar.png" alt="">
-        <form class="form-signin" method="post">
+        <form class="form-signin" method="post" action=''>
+          $if success == False:
+            <div class="alert alert-danger fade in">
+              <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+              <strong>登录失败！</strong>请检查用户名、密码及年级是否输入正确。
+            </div>
           <input type="text" name="username" class="form-control" placeholder="用户名" required autofocus>
           <input type="password" name="password" class="form-control" placeholder="密码" required>
-          <select id="select-grade" class="form-control" >
+          <select name='grade' id="select-grade" class="form-control" >
             <option value="1">大一年级</option>
             <option value="2">大二年级</option>
             <option value="3">大三年级</option>
@@ -66,7 +70,7 @@ $def with ()
 <!--     <div class="container">
 
       <form class="form-signin" method="post">
-        <h2 class="form-signin-heading">学生工作决策支持平台</h2>
+        <h2 class="form-signin-heading">xxx</h2>
         <input type="text" name="username" class="form-control" placeholder="用户名" autofocus>
         <input type="password" name="password" class="form-control" placeholder="密码">
         <label class="checkbox"><input type="checkbox" value="remember-me"> Remember me</label>

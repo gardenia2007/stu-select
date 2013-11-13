@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*- 
 
 import web
-import re
-import base64
 import urllib
 from config import setting
 
@@ -27,7 +25,11 @@ class Logout:
 
 class Login:
 	def GET(self):
-		return render.login()
+		i = web.input(post='0')
+		if i.post == '1':
+			return self.POST()
+		else:
+			return render.login(True)
 	def login_as(self, role, i):
 		if role == 'student': # 学生用学号登录
 			sql = "SELECT * FROM %s WHERE no=$n AND pw=$p"%(role)
@@ -46,6 +48,9 @@ class Login:
 			return False
 	def POST(self):
 		i = web.input()
+		if i.grade != setting.config.grade:
+			return web.seeother('http://127.0.0.1/select%s/login?post=1&username=%s&password=%s&grade=%s'\
+				%(i.grade, i.username, i.password, i.grade))
 		if i.username == 'admin':
 			r = list(db.select('admin', where=web.db.sqlwhere({'name':i.username, 'pw':i.password})))
 			if len(r) >= 1:
@@ -60,7 +65,7 @@ class Login:
 		elif(self.login_as('teacher', i)):
 			return
 		else:
-			return render.login()
+			return render.login(False)
 
 class DBtest:
     def GET(self):

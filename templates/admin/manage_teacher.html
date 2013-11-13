@@ -23,8 +23,8 @@ $:render.common.header(session, route)
         <td>$u.pos</td>
         <td>$u.lab</td>
         <td>
-          <a href="/admin/teacher/info/$u.id" class="btn btn-primary" target="_blank">编辑</a>
-          <a href="/admin/del/teacher/$u.id" class="btn btn-danger" onclick="return confirm('确认删除 $u.name 的帐号吗？\n该操作无法取消。');">删除</a>
+          <a href="$config.root/admin/teacher/info/$u.id" class="btn btn-primary" target="_blank">编辑</a>
+          <a href="$config.root/admin/del/teacher/$u.id" class="btn btn-danger" onclick="return confirm('确认删除 $u.name 的帐号吗？\n该操作无法取消。');">删除</a>
         </td>
       </tr>
     </table>
