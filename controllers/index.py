@@ -9,17 +9,21 @@ db = setting.db
 
 class Index:
     def GET(self):
-    	if web.ctx.session.is_login == False:
-    		web.seeother('/login')
-    	else:
-    		web.seeother('/student')
+	try:
+		if web.ctx.session.is_login == False:
+			return web.seeother('/login')
+	except Exception, e:
+		print e
+		return self.error('未知错误，请重试。')
+	else:
+		web.seeother('/student')
     def POST(self):
         pass
 
 class Logout:
     def GET(self):
     	web.ctx.session.kill()
-    	web.seeother('/')
+	web.seeother('/')
     def POST(self):
         pass
 
@@ -49,7 +53,7 @@ class Login:
 	def POST(self):
 		i = web.input()
 		if i.grade != setting.config.grade:
-			return web.seeother('http://127.0.0.1/select%s/login?post=1&username=%s&password=%s&grade=%s'\
+			return web.seeother(setting.config.refer+'%s/login?post=1&username=%s&password=%s&grade=%s'\
 				%(i.grade, i.username, i.password, i.grade))
 		if i.username == 'admin':
 			r = list(db.select('admin', where=web.db.sqlwhere({'name':i.username, 'pw':i.password})))

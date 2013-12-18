@@ -8,7 +8,7 @@ class Admin:
 			if not (web.ctx.session.is_login and web.ctx.session.is_admin):
 				raise web.seeother('/login')
 		except Exception, e:
-			raise e
+			#raise e
 			return self.error('未知错误，请重试。')
 		else:
 			pass
@@ -24,7 +24,7 @@ class User:
 				return web.seeother('/login')
 		except Exception, e:
 			print e
-			return self.error('未知错误，请重试。')
+			raise self.error('未知错误，请重试。')
 		else:
 			pass
 	def error(self, msg):

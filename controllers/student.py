@@ -20,7 +20,7 @@ class TeacherMy(User):
 	def __init__(self):
 		User.__init__(self)
 	def GET(self):
-		r = db.query('SELECT st.status, teacher.* from student, st, teacher where st.id=student.st and teacher.id=st.teacher and student.id=%d'%(web.ctx.session.uid))
+		r = list(db.query('SELECT st.status, teacher.* from student, st, teacher where st.id=student.st and teacher.id=st.teacher and student.id=%d'%(web.ctx.session.uid)))
 		if(len(r) <= 0):
 			data = None
 		else:
@@ -31,7 +31,12 @@ class TeacherAll(User):
 	def __init__(self):
 		User.__init__(self)
 	def GET(self):
-		data = {'teacher':db.select('teacher')}
+		r = list(db.query('SELECT st.status, teacher.id from student, st, teacher where st.id=student.st and teacher.id=st.teacher and student.id=%d'%(web.ctx.session.uid)))
+		if(len(r) <= 0):
+			my = None
+		else:
+			my = r[0]
+		data = {'teacher':db.select('teacher'), 'my':my}
 		return render.student.teacher_all(web.ctx.session, 'teacher_all', data)
 
 class TeacherInfo(User):

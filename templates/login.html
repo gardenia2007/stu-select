@@ -42,16 +42,19 @@ $def with (success)
           $if success == False:
             <div class="alert alert-danger fade in">
               <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-              <strong>登录失败！</strong>请检查用户名、密码及年级是否输入正确。
+              <strong>登录失败！</strong>请检查用户名、密码是否输入正确。
             </div>
           <input type="text" name="username" class="form-control" placeholder="用户名" required autofocus>
           <input type="password" name="password" class="form-control" placeholder="密码" required>
+          <input type="hidden" name="grade" value='1' >
+	<!--
           <select name='grade' id="select-grade" class="form-control" >
             <option value="1">大一年级</option>
             <option value="2">大二年级</option>
             <option value="3">大三年级</option>
             <option value="4">大四年级</option>
           </select>
+	-->
           <br>
           <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
 

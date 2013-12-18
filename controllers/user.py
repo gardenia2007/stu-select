@@ -32,7 +32,7 @@ class UpdatePw(User):
 		else:
 			vars = {'id':web.ctx.session.uid, 'pw':i.old_password}
 		old = db.select(role, where=web.db.sqlwhere(vars))
-		if len(old) <= 0:
+		if len(old.list()) <= 0:
 			return self.error('原密码不正确，请重新输入!')
 		if web.ctx.session.is_admin == True:
 			vars = {'name':'admin'}
