@@ -54,9 +54,9 @@ $for t in data['teacher']:
         <h4>$t.name<small>&nbsp;&nbsp;$t.pos</small>
 	$if data['my'] is not None and data['my'].id == t.id:
 		$if data['my'].status == 'pass':
-			<img style="width:16px;height:16px" src='/static/img/check.png'>
+			<img style="width:16px;height:16px" src='$config.static/img/check.png'>
 		$else:
-			<img style="width:16px;height:16px" src='/static/img/question.png'>
+			<img style="width:16px;height:16px" src='$config.static/img/question.png'>
 	</h4>
         <p style=''>$t.lab</p>
       </div>

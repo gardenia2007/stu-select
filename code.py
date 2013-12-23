@@ -19,7 +19,7 @@ app = web.application(urls, globals())
 
 if web.config.get('_session') is None:
     store = web.session.DBStore(db, 'sessions')
-    session = web.session.Session(app, store, initializer={'is_login':False, 'is_admin':False})
+    session = web.session.Session(app, store, initializer={'uid':0, 'is_login':False, 'is_admin':False})
     #session = web.session.Session(app, web.session.DiskStore(os.path.join(curdir,'sessions')), initializer={'is_login':False, 'is_admin':False})
     web.config._session = session
 else:
