@@ -4,13 +4,13 @@ import web
 import urllib
 from config import setting
 
-render = setting.render
-db = setting.db
+render = web.config._render
+db = web.config._db
 
 class Index:
     def GET(self):
 	try:
-		if web.ctx.session.is_login == False:
+		if web.config._session.is_login == False:
 			return web.seeother('/login')
 	except Exception, e:
 		print e
@@ -22,7 +22,7 @@ class Index:
 
 class Logout:
     def GET(self):
-    	web.ctx.session.kill()
+    	web.config._session.kill()
 	web.seeother('/')
     def POST(self):
         pass
@@ -41,11 +41,11 @@ class Login:
 			sql = "SELECT * FROM %s WHERE name=$n AND pw=$p"%(role)
 		results = list(db.query(sql, vars={'n':i.username, 'p':i.password}))
 		if len(results) >= 1:
-			web.ctx.session.is_login = True
-			web.ctx.session.uid = results[0].id
-			web.ctx.session.name = results[0].name
-			web.ctx.session.role= role
-			web.ctx.session.is_admin = False
+			web.config._session.is_login = True
+			web.config._session.uid = results[0].id
+			web.config._session.name = results[0].name
+			web.config._session.role= role
+			web.config._session.is_admin = False
 			web.seeother('/'+role)
 			return True
 		else:
@@ -58,10 +58,11 @@ class Login:
 		if i.username == 'admin':
 			r = list(db.select('admin', where=web.db.sqlwhere({'name':i.username, 'pw':i.password})))
 			if len(r) >= 1:
-				web.ctx.session.name = 'Admin'
-				web.ctx.session.role= 'admin'
-				web.ctx.session.is_login = True
-				web.ctx.session.is_admin = True
+				web.config._session.name = 'Admin'
+				web.config._session.role = 'admin'
+				web.config._session.uid = 0
+				web.config._session.is_login = True
+				web.config._session.is_admin = True
 			web.seeother('/admin')
 			return
 		elif(self.login_as('student', i)):

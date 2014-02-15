@@ -49,15 +49,14 @@ $for t in data['teacher']:
   <div class="col-sm-6 col-md-2">
     <div class="thumbnail item" data-id='$t.id'>
       <img src="$t.photo" alt="">
-      <!-- <img src="/static/img/t_chenghd.jpg" alt=""> -->
       <div class="caption">
         <h4>$t.name<small>&nbsp;&nbsp;$t.pos</small>
-	$if data['my'] is not None and data['my'].id == t.id:
-		$if data['my'].status == 'pass':
-			<img style="width:16px;height:16px" src='$config.static/img/check.png'>
-		$else:
-			<img style="width:16px;height:16px" src='$config.static/img/question.png'>
-	</h4>
+      	$if data['my'] is not None and data['my'].id == t.id:
+      		$if data['my'].status == 'pass':
+      			<img style="width:16px;height:16px" src='$config.static/img/check.png'>
+      		$else:
+      			<img style="width:16px;height:16px" src='$config.static/img/question.png'>
+      	</h4>
         <p style=''>$t.lab</p>
       </div>
       <div class="progress">

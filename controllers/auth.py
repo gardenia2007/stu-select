@@ -4,8 +4,9 @@ from config import setting
 
 class Admin:
 	def __init__(self):
+		self.session = web.config._session
 		try:
-			if not (web.ctx.session.is_login and web.ctx.session.is_admin):
+			if not (self.session.is_login and self.session.is_admin):
 				raise web.seeother('/login')
 		except Exception, e:
 			#raise e
@@ -13,14 +14,15 @@ class Admin:
 		else:
 			pass
 	def error(self, msg):
-		return setting.render.error_page(web.ctx.session, '', msg)
+		return web.config._render.error_page(self.session, '', msg)
 	def success(self, msg):
-		return setting.render.success_page(web.ctx.session, '', msg)
+		return web.config._render.success_page(self.session, '', msg)
 
 class User:
 	def __init__(self):
+		self.session = web.config._session
 		try:
-			if web.ctx.session.is_login == False:
+			if self.session.is_login == False:
 				return web.seeother('/login')
 		except Exception, e:
 			print e
@@ -28,8 +30,8 @@ class User:
 		else:
 			pass
 	def error(self, msg):
-		return setting.render.error_page(web.ctx.session, '', msg)
+		return web.config._render.error_page(self.session, '', msg)
 	def success(self, msg):
-		return setting.render.success_page(web.ctx.session, '', msg)
+		return web.config._render.success_page(self.session, '', msg)
 
 

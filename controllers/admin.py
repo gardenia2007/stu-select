@@ -8,22 +8,22 @@ from auth import Admin
 from config import setting
 
 
-render = setting.render
-db = setting.db
+render = web.config._render
+db = web.config._db
 
 
 class Index(Admin):
 	def __init__(self):
 		Admin.__init__(self)
 	def GET(self):
-		return render.admin.admin(web.ctx.session, 'admin', {})
+		return render.admin.admin(self.session, 'admin', {})
 
 class InfoStudent(Admin):
 	def __init__(self):
 		Admin.__init__(self)
 	def GET(self):
 		student = db.query('SELECT *, student.name as stu_name, teacher.name as tea_name from student, st, teacher where st.id = student.st and teacher.id=st.teacher')
-		return render.admin.info_student(web.ctx.session, 'info-student', student)
+		return render.admin.info_student(self.session, 'info-student', student)
 
 class InfoTeacher(Admin):
 	def __init__(self):
@@ -34,14 +34,14 @@ class InfoTeacher(Admin):
 		for t in teacher:
 			st[t.id] = list(db.query("SELECT student.name from student, st where st.teacher=%d and st.status='pass' and st.student=student.id"%(t.id)))
 		data = {'teacher':teacher, 'st':st}
-		return render.admin.info_teacher(web.ctx.session, 'info-teacher', data)
+		return render.admin.info_teacher(self.session, 'info-teacher', data)
 
 class ManageTeacher(Admin):
 	def __init__(self):
 		Admin.__init__(self)
 	def GET(self):
 		teacher = list(db.select('teacher'))
-		return render.admin.manage_teacher(web.ctx.session, 'manage-teacher', teacher)
+		return render.admin.manage_teacher(self.session, 'manage-teacher', teacher)
 
 class Upload(Admin):
 	def __init__(self):
@@ -116,7 +116,7 @@ class UpdateTeacherInfo(Admin):
 		Admin.__init__(self)
 	def GET(self, tid):
 		data = db.select('teacher', where='id=%s'%(int(tid)))[0]
-		return render.teacher.info(web.ctx.session, 'teacher_info', data)
+		return render.teacher.info(self.session, 'teacher_info', data)
 	def POST(self, tid):
 		i = web.input()
 		# 设置默认头像
