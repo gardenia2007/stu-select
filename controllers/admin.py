@@ -83,7 +83,7 @@ class Upload(Admin):
 			db.query('UPDATE teacher set has=0 where 1')
 			f = csv.reader(web.input(file={}).file.file)
 			for s_class, s_no, s_name, s_email, s_phone in f:
-				db.query('INSERT into student values (NULL, $n, $no, $no, $c, $e, $p, "", 0)', \
+				db.query('INSERT into student values (NULL, $n, $no, $no, $c, $e, $p, "", NULL, "on")', \
 					vars={'no':s_no, 'n':s_name, 'c':s_class, 'e':s_email, 'p':s_phone})
 		except Exception, e:
 			t.rollback()

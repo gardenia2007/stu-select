@@ -20,7 +20,7 @@ class StudentMy(User):
 	def __init__(self):
 		User.__init__(self)
 	def GET(self):
-		data = db.query("SELECT * from st, student where st.teacher=%d and ( st.status='wait' or st.status='pass' ) and student.id=st.student"\
+		data = db.query("SELECT st.status, student.name, student.no, student.id from st, student where st.teacher=%d and ( st.status='wait' or st.status='pass' ) and student.id=st.student"\
 			%(self.session.uid))
 		return render.teacher.student_my(self.session, 'student_my', data)
 
@@ -64,12 +64,8 @@ class Fail(User):
 		User.__init__(self)
 	def GET(self, st_id):
 		try:
-			st = db.select('st', dict(id=st_id), where='id=$id')[0]
-			print st
-			if st.status == 'pass':
-				return self.error('该学生已为通过状态，无法放弃选择！')
-			else:
-				db.update('st', web.db.sqlwhere({'id':st_id}), status='fail')
+			db.query("UPDATE teacher SET has = has - 1 WHERE id = $id", vars={'id':self.session.uid})
+			db.update('st', web.db.sqlwhere({'id':st_id}), status='fail')
 		except Exception, e:
 			print e
 			return self.error('未知错误，请重试。')
