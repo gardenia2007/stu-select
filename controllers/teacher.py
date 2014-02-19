@@ -20,8 +20,9 @@ class StudentMy(User):
 	def __init__(self):
 		User.__init__(self)
 	def GET(self):
-		data = db.query("SELECT st.status, student.name, student.no, student.id from st, student where st.teacher=%d and ( st.status='wait' or st.status='pass' ) and student.id=st.student"\
-			%(self.session.uid))
+		data = db.query("SELECT st.status, student.name, student.no, student.id from st, student \
+			where st.teacher=%d and ( st.status='wait' or st.status='pass' or st.status='fail') \
+			and student.id=st.student"%(self.session.uid))
 		return render.teacher.student_my(self.session, 'student_my', data)
 
 class TeacherAll(User):
