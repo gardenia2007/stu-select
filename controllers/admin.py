@@ -22,7 +22,13 @@ class InfoStudent(Admin):
 	def __init__(self):
 		Admin.__init__(self)
 	def GET(self):
-		student = db.query('SELECT *, student.name as stu_name, teacher.name as tea_name from student, st, teacher where st.id = student.st and teacher.id=st.teacher')
+		student = db.query(
+			"SELECT student.no, student.classno, student.name AS stu_name, teacher.name as tea_name, st.status \
+				FROM student \
+				LEFT OUTER JOIN st ON st.id = student.st \
+				LEFT OUTER JOIN teacher ON teacher.id = st.teacher \
+				LIMIT 0 , 30"
+				)
 		return render.admin.info_student(self.session, 'info-student', student)
 
 class InfoTeacher(Admin):

@@ -34,10 +34,17 @@ $def with (success)
 
   <body>
     <div class="container">
-      <h2 class="form-signin-heading text-center">Sign in with your Account</h2>
+    <div class="alert alert-danger" style="margin-top:-35px;margin-bottom:30px">
+      <div style="text-align:center;">
+        为了您能获得更好的浏览体验，建议您升级IE浏览器或安装<a style="color:#B94A48;" href="http://www.google.cn/intl/zh-CN/chrome/browser/"><strong>Google Chrome</strong></a>、<a style="color:#B94A48;" href="http://firefox.com.cn/"><strong>Firefox</strong></a>等现代浏览器，否则网站某些功能可能无法正常使用
+      </div>
+    </div>
+    <!--[if lt IE 9]>
+    <![endif]-->
 
       <div class="card card-signin">
-        <img class="img-circle profile-img" src="$config.static/img/avatar.png" alt="">
+        <!-- <img class="img-circle profile-img" src="$config.static/img/avatar.png" alt=""> -->
+        <h3 class="text-center">$config.site_name</h3>
         <form class="form-signin" method="post" action=''>
           $if success == False:
             <div class="alert alert-danger fade in">

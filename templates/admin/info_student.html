@@ -19,18 +19,20 @@ $:render.common.header(session, route)
       </tr>
     $def get_status(s):
       $if s == 'fail':
-        失败
+        (失败)
       $elif s == 'pass':
-        通过
+        (通过)
+      $elif s == 'wait':
+        (待审核)
       $else:
-        待审核
+        未选择
     $for u in data:
       <tr>
         <td>$loop.index</td>
         <td>$u.no</td>
         <td>$u.stu_name</td>
         <td>$u.classno</td>
-        <td>$u.tea_name ($get_status(u.status))</td>
+        <td>$u.tea_name&nbsp;$get_status(u.status)</td>
       </tr>
     </table>
   </div>
