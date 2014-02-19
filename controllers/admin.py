@@ -38,7 +38,10 @@ class InfoTeacher(Admin):
 		teacher = list(db.select('teacher'))
 		st = {}
 		for t in teacher:
-			st[t.id] = list(db.query("SELECT student.name from student, st where st.teacher=%d and st.status='pass' and st.student=student.id"%(t.id)))
+			st[t.id] = list(db.query(
+				"SELECT student.name from student, st where st.teacher=%d and \
+					( st.status='pass' OR st.status='wait') \
+					and st.student=student.id"%(t.id)))
 		data = {'teacher':teacher, 'st':st}
 		return render.admin.info_teacher(self.session, 'info-teacher', data)
 
