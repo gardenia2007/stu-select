@@ -35,18 +35,21 @@ class Login:
 		else:
 			return render.login(True)
 	def login_as(self, role, i):
+		self.forbid_login = False
 		if role == 'student': # 学生用学号登录
-			sql = "SELECT * FROM %s WHERE no=$n AND pw=$p"%(role)
+			sql = "SELECT id,name,status FROM %s WHERE no=$n AND pw=$p"%(role)
 		else: # 教师用姓名
-			sql = "SELECT * FROM %s WHERE name=$n AND pw=$p"%(role)
+			sql = "SELECT id,name,status FROM %s WHERE name=$n AND pw=$p"%(role)
 		results = list(db.query(sql, vars={'n':i.username, 'p':i.password}))
 		if len(results) >= 1:
+			if results[0].status == 'off':
+				self.forbid_login = True
+				return True
 			web.config._session.is_login = True
 			web.config._session.uid = results[0].id
 			web.config._session.name = results[0].name
 			web.config._session.role= role
 			web.config._session.is_admin = False
-			web.seeother('/'+role)
 			return True
 		else:
 			return False
@@ -66,10 +69,18 @@ class Login:
 			web.seeother('/admin')
 			return
 		elif(self.login_as('student', i)):
-			return
+			if self.forbid_login: # 关闭了登录功能
+				return web.config._render.error_page(web.config._session, '', "帐号登录已关闭，请等候通知")
+			else:
+				web.seeother('/student')
+				return
 		elif(self.login_as('teacher', i)):
-			return
-		else:
+			if self.forbid_login: # 关闭了登录功能
+				return web.config._render.error_page(web.config._session, '', "帐号登录已关闭，请等候通知")
+			else:
+				web.seeother('/teacher')
+				return
+		else: # 正常的登录失败
 			return render.login(False)
 
 class DBtest:

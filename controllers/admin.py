@@ -16,7 +16,27 @@ class Index(Admin):
 	def __init__(self):
 		Admin.__init__(self)
 	def GET(self):
-		return render.admin.admin(self.session, 'admin', {})
+		data = {}
+		for role in ['student', 'teacher']:
+			item = db.select(role, limit=1) # 从数据库中随便选一条获取其状态
+			if len(item) == 0:
+				data[role] = 'on'
+			else:
+				data[role] = item[0]['status']
+		return render.admin.admin(self.session, 'admin', data)
+
+class UpdateLogin(Admin):
+	def __init__(self):
+		Admin.__init__(self)
+	def POST(self):
+		i = web.input()
+		a = db.update('teacher', where='1', status=i.teacher)
+		b = db.update('student', where='1', status=i.student)
+		# if a and b : # a, b = 0
+		return self.success("设置成功！")
+		# else:
+			# return self.error("设置失败，请重试！")
+
 
 class InfoStudent(Admin):
 	def __init__(self):

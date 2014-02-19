@@ -9,6 +9,7 @@ urls = (
 
     "/admin",					pre_fix + "admin.Index",
     "/admin/upload",            pre_fix + "admin.Upload",
+    "/admin/update/login",      pre_fix + "admin.UpdateLogin",
     "/admin/add/student",       pre_fix + "admin.AddStudent",
     "/admin/add/teacher",       pre_fix + "admin.AddTeacher",
     "/admin/del/teacher/(\d+)", pre_fix + "admin.DelTeacher",
