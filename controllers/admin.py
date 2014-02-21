@@ -59,9 +59,9 @@ class InfoTeacher(Admin):
 		st = {}
 		for t in teacher:
 			st[t.id] = list(db.query(
-				"SELECT student.name from student, st where st.teacher=%d and \
+				"SELECT student.name, st.status from student, st where st.teacher=%d and \
 					( st.status='pass' OR st.status='wait') \
-					and st.student=student.id"%(t.id)))
+					and st.student=student.id order by st.status desc"%(t.id)))
 		data = {'teacher':teacher, 'st':st}
 		return render.admin.info_teacher(self.session, 'info-teacher', data)
 

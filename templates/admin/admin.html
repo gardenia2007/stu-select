@@ -172,22 +172,21 @@ $:render.common.header(session, route)
       <!-- 开启/关闭 学生登录 -->
       <div class="tab-pane" id="manage-login">
         <form class="form-horizontal" role="form" style="width:400px;margin-top:40px" method="post" action="$config.root/admin/update/login">
-
           $def get_checked(a, b):
             $if a == b:
               checked
           <div class="form-group">
             <label class="col-lg-5 control-label">学生登录</label>
             <div class="col-lg-7">
-              <input class="" type="radio" name="student" $get_checked(data['student'], 'on')value="on"><span>开启</span>
-              <input class="" type="radio" name="student" $get_checked(data['student'], 'off')value="off"><span>关闭</span>
+              <input class="" type="radio" name="student" $get_checked(data['student'], 'on') value="on"><span>开启</span>
+              <input class="" type="radio" name="student" $get_checked(data['student'], 'off') value="off"><span>关闭</span>
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-5 control-label">导师登录</label>
             <div class="col-lg-7">
-              <input class="" type="radio" name="teacher" $get_checked(data['teacher'], 'on')value="on"><span>开启</span>
-              <input class="" type="radio" name="teacher" $get_checked(data['teacher'], 'off')value="off"><span>关闭</span>
+              <input class="" type="radio" name="teacher" $get_checked(data['teacher'], 'on') value="on"><span>开启</span>
+              <input class="" type="radio" name="teacher" $get_checked(data['teacher'], 'off') value="off"><span>关闭</span>
             </div>
           </div>
 

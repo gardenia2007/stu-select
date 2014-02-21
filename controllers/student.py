@@ -20,7 +20,7 @@ class TeacherMy(User):
 	def __init__(self):
 		User.__init__(self)
 	def GET(self):
-		r = list(db.query('SELECT st.status, teacher.* from student, st, teacher where st.id=student.st and teacher.id=st.teacher and student.id=%d'%(self.session.uid)))
+		r = list(db.query('SELECT teacher.*, st.status as status from student, st, teacher where st.id=student.st and teacher.id=st.teacher and student.id=%d'%(self.session.uid)))
 		if(len(r) <= 0):
 			data = None
 		else:

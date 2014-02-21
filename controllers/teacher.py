@@ -57,8 +57,12 @@ class Pass(User):
 	def __init__(self):
 		User.__init__(self)
 	def GET(self, st_id):
-			db.update('st', web.db.sqlwhere({'id':st_id}), status='pass')
-			web.seeother('/teacher/student/my')
+
+		if len(list(db.select('st', where=web.db.sqlwhere(\
+				{'status':'pass', 'teacher':self.session.uid})))) >= 5:
+			return self.error('操作失败，您选择的学生人数已达到上限5名！')
+		db.update('st', web.db.sqlwhere({'id':st_id, 'teacher':self.session.uid}), status='pass')
+		web.seeother('/teacher/student/my')
 
 class Fail(User):
 	def __init__(self):
