@@ -6,7 +6,7 @@ import web
 
 # db = web.database(dbn='mysql', db='stu_select', user='root', pw='root')
 
-web.config.debug = True
+web.config.debug = False
 
 config = web.storage(
 	site_name = U"本科生导师互选系统",
