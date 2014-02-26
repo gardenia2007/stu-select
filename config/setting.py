@@ -14,7 +14,10 @@ config = web.storage(
 	email='gardeniaxy@gmail.com',
 	root = '',
 	refer = '/',
-	static = '/static',
+	# 使用本地static资源
+	# static = '/static',
+	# 使用'qiniu'云存储资源
+	static = 'http://cs-mentor.qiniudn.com',
 	app_name = 'mentor',
 	# 年级
 	grade = '1',

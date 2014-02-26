@@ -1,0 +1,17 @@
+-- step1:删除错误的'wait'状态
+UPDATE st SET status = 'delete' WHERE id IN (
+	SELECT st_id FROM (
+		SELECT st.id AS st_id, student.id AS stu_id
+		FROM  `st` 
+		LEFT JOIN student ON student.st = st.id
+		WHERE st.status =  'wait'
+	) AS a
+	WHERE a.stu_id IS NULL
+);
+
+-- step2:根据st表更新has数据
+UPDATE teacher SET has = (
+	SELECT COUNT( * ) AS has FROM  `st` 
+	WHERE  `teacher` = teacher.id
+	AND  `status` =  'wait' ) 
+WHERE 1
